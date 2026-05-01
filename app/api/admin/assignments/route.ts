@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 import { authOptions } from '@/lib/auth';
 import { connectDB } from '@/lib/mongodb';
 import Assignment from '@/models/Assignment';
+import '@/models/User';
+import '@/models/Hotel';
+import '@/models/Cab';
+import '@/models/POC';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
