@@ -53,13 +53,9 @@ export default function AdminAssignmentsPage() {
   async function fetchAll() {
     setIsLoadingList(true); setListError('');
     try {
-      const [gR, hR, cR, pR, aR] = await Promise.all([
-        fetch('/api/admin/guests'), fetch('/api/admin/hotels'),
-        fetch('/api/admin/cabs'), fetch('/api/admin/pocs'),
-        fetch('/api/admin/assignments'),
-      ]);
-      if (!gR.ok || !hR.ok || !cR.ok || !pR.ok || !aR.ok) throw new Error();
-      const [g, h, c, p, a] = await Promise.all([gR.json(), hR.json(), cR.json(), pR.json(), aR.json()]);
+      const res = await fetch('/api/admin/assignments/init');
+      if (!res.ok) throw new Error();
+      const { guests: g, hotels: h, cabs: c, pocs: p, assignments: a } = await res.json();
       setGuests(g); setHotels(h); setCabs(c); setPocs(p); setAssignments(a);
     } catch { setListError('Could not load data. Please refresh.'); }
     finally { setIsLoadingList(false); }
