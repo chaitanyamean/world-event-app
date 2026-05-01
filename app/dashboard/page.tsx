@@ -19,19 +19,20 @@ export default async function DashboardPage() {
   }
 
   // Merge hotel name/address with assignment-level check-in/out/room
-  const hotelDoc = assignment?.hotelId as Record<string, unknown> | null ?? null;
+  const assignmentObj = assignment as unknown as Record<string, unknown> | null;
+  const hotelDoc = (assignmentObj?.hotelId as Record<string, unknown> | null) ?? null;
   const hotel = hotelDoc
     ? {
         hotelName: hotelDoc.hotelName as string,
         address: hotelDoc.address as string,
-        checkInDate: (assignment as Record<string, unknown>)?.checkInDate as string | null ?? null,
-        checkOutDate: (assignment as Record<string, unknown>)?.checkOutDate as string | null ?? null,
-        roomNumber: (assignment as Record<string, unknown>)?.roomNumber as string | null ?? null,
+        checkInDate: assignmentObj?.checkInDate as string | null ?? null,
+        checkOutDate: assignmentObj?.checkOutDate as string | null ?? null,
+        roomNumber: assignmentObj?.roomNumber as string | null ?? null,
       }
     : null;
 
-  const cab = (assignment?.cabId as Record<string, unknown> | null) ?? null;
-  const poc = (assignment?.pocId as Record<string, unknown> | null) ?? null;
+  const cab = (assignmentObj?.cabId as Record<string, unknown> | null) ?? null;
+  const poc = (assignmentObj?.pocId as Record<string, unknown> | null) ?? null;
 
   return (
     <div>
