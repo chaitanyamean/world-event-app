@@ -14,7 +14,8 @@ export default async function DashboardPage() {
   let assignment = null;
   try {
     assignment = await getGuestDashboardData(session.user.userId, session.user.userId);
-  } catch {
+  } catch (err) {
+    console.error('[DashboardPage] failed to load assignment:', err);
     assignment = null;
   }
 
