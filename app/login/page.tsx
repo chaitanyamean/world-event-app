@@ -28,8 +28,13 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
+        // Only stop the loader on failure — show the error
         setError('Invalid mobile number or password');
+        setIsLoading(false);
       } else if (result?.ok) {
+        // Keep the loader spinning through navigation.
+        // The component will unmount so no cleanup needed.
+        // setIsLoading(false);
         const session = await getSession();
         if (session?.user?.role === 'admin') {
           router.push('/admin');
@@ -40,7 +45,6 @@ export default function LoginPage() {
       }
     } catch {
       setError('Something went wrong, please try again');
-    } finally {
       setIsLoading(false);
     }
   }
